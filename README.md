@@ -315,13 +315,13 @@ MIT License — see [LICENSE](LICENSE) for details.
 ## 👨‍💻 Author
 
 **Sagnik**  
-GitHub: [@YOUR_USERNAME](https://github.com/YOUR_USERNAME)  
-Email: your.email@college.edu
+GitHub: [@YOUR_USERNAME](https://github.com/sagnik0606-ux)  
+Email: basu.sagnik5@gmail.com
 
 ## 🙋 Support
 
 Found a bug or have a feature request?  
-[Open an issue](https://github.com/YOUR_USERNAME/formflow/issues) on GitHub.
+[Open an issue](https://github.com/sagnik0606-ux/formflow/issues) on GitHub.
 
 ---
 
