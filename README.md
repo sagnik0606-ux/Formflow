@@ -57,7 +57,7 @@ A Google Forms replica built specifically for college instructors and students. 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/formflow.git
+git clone https://github.com/sagnik0606-ux/formflow.git
 cd formflow
 ```
 
