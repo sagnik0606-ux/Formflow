@@ -4,159 +4,288 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Sign in</title>
+    <title>Sign in | FormFlow</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
-        * { font-family: 'DM Sans', sans-serif; }
-
-        .glass-box {
-            background: rgba(255,255,255,.06);
-            backdrop-filter: blur(18px);
-            padding: 3.5rem;
-            border-radius: 2.5rem;
-            border: 1px solid rgba(255,255,255,.12);
-            box-shadow: 0 30px 80px rgba(0,0,0,.6);
-            width: 100%;
-            max-width: 460px;
+        :root {
+            --emerald-glow: rgba(16, 185, 129, 0.15);
+            --slate-glow: rgba(59, 130, 246, 0.1);
         }
 
-        /* ── Toast notification ── */
-        .toast {
+        * { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            margin: 0;
             display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 14px 16px;
-            border-radius: 14px;
-            margin-bottom: 20px;
-            animation: slideDown .3s cubic-bezier(.22,1,.36,1);
-            border: 1px solid transparent;
-        }
-        .toast.error {
-            background: rgba(239,68,68,.12);
-            border-color: rgba(239,68,68,.3);
-            color: #fca5a5;
-        }
-        .toast.success {
-            background: rgba(16,185,129,.12);
-            border-color: rgba(16,185,129,.3);
-            color: #6ee7b7;
-        }
-        .toast-icon {
-            font-size: 18px;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-        .toast-body {}
-        .toast-title {
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 2px;
-        }
-        .toast-msg {
-            font-size: 13px;
-            opacity: .8;
-            line-height: 1.4;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to   { opacity: 1; transform: translateY(0); }
+        /* ── Dynamic Background Orbs ── */
+        .orb {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: move 30s infinite alternate ease-in-out;
+        }
+        .orb-1 {
+            background: radial-gradient(circle, #10b981 0%, transparent 70%);
+            top: -20%;
+            left: -10%;
+        }
+        .orb-2 {
+            background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
+            bottom: -20%;
+            right: -10%;
+            animation-delay: -7s;
+        }
+
+        @keyframes move {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(150px, 80px) scale(1.15); }
+        }
+
+        /* ── Glass Container ── */
+        .glass-container {
+            background: rgba(15, 15, 15, 0.75);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 2.5rem;
+            width: 100%;
+            max-width: 440px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.9);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ── Segmented Control (Tabs) ── */
+        .tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 5px;
+            border-radius: 1.25rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 1rem;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            text-align: center;
+            user-select: none;
+        }
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         /* ── Inputs ── */
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        .input-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.35);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 10px;
+            margin-left: 6px;
+        }
         .field {
             width: 100%;
-            padding: 12px 16px;
-            border-radius: 14px;
-            background: rgba(255,255,255,.06);
-            border: 1px solid rgba(255,255,255,.1);
+            background: rgba(255, 255, 255, 0.035);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.25rem;
+            padding: 16px 20px;
             color: #fff;
-            font-size: 14px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             outline: none;
-            transition: border-color .2s, box-shadow .2s;
-            appearance: none;
-            -webkit-appearance: none;
         }
         .field:focus {
-            border-color: #34d399;
-            box-shadow: 0 0 0 3px rgba(52,211,153,.15);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: #10b981;
+            box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.12);
+            transform: translateY(-1px);
         }
-        .field::placeholder { color: rgba(255,255,255,.35); }
-        .field option { background: #1f2937; color: #fff; }
+        .field::placeholder { color: rgba(255, 255, 255, 0.15); }
+        .field select { background: transparent; }
+        option { background: #111; color: #fff; }
 
-        /* Batch row animation */
-        .batch-row {
-            overflow: hidden;
-            transition: max-height .35s cubic-bezier(.22,1,.36,1), opacity .3s;
-            max-height: 0;
-            opacity: 0;
-        }
-        .batch-row.visible {
-            max-height: 80px;
-            opacity: 1;
-        }
-
-        /* ── Button ── */
-        .btn-primary {
+        /* ── Primary Button ── */
+        .btn-action {
             width: 100%;
-            padding: 13px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: #fff;
-            font-weight: 600;
-            font-size: 15px;
-            letter-spacing: .01em;
+            background: #fff;
+            color: #000;
+            padding: 16px;
+            border-radius: 1.25rem;
+            font-weight: 800;
+            font-size: 16px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 1rem;
             border: none;
             cursor: pointer;
-            transition: opacity .2s, transform .15s;
-            box-shadow: 0 4px 20px rgba(16,185,129,.3);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
         }
-        .btn-primary:hover { opacity: .9; transform: translateY(-1px); }
-        .btn-primary:active { transform: translateY(0); }
+        .btn-action:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+        }
+        .btn-action:active { transform: translateY(-1px) scale(1); }
 
-        /* label tag above batch field */
-        .batch-label {
-            display: block;
-            font-size: 12px;
-            color: rgba(255,255,255,.45);
-            margin-bottom: 6px;
-            letter-spacing: .04em;
-            text-transform: uppercase;
+        /* ── Toast ── */
+        .toast {
+            position: fixed;
+            top: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            padding: 14px 24px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .toast.error { background: rgba(239, 68, 68, 0.95); backdrop-filter: blur(12px); color: #fff; }
+        .toast.success { background: rgba(16, 185, 129, 0.95); backdrop-filter: blur(12px); color: #fff; }
+
+        @keyframes slideIn {
+            from { transform: translate(-50%, -40px); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+
+        /* ── Animations ── */
+        .fade-in { animation: fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .batch-row {
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 0;
+        }
+        .batch-row.visible {
+            max-height: 120px;
+            opacity: 1;
+            margin-bottom: 1.5rem;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-[#020617] to-[#031b1a] min-h-screen flex items-center justify-center p-4">
+<body class="bg-[#080808]">
 
-    <div class="glass-box" id="app"></div>
+    <!-- Background Decoration -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="flex flex-col items-center w-full max-w-md px-6">
+        <!-- Logo & Header -->
+        <div class="text-center mb-10 fade-in">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-600 rounded-[1.25rem] mb-6 shadow-2xl shadow-emerald-900/30">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 8L3 12L7 16M17 8L21 12L17 16M14 4L10 20" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h1 class="text-5xl font-black tracking-tighter mb-3 uppercase flex items-center justify-center gap-2">
+                Form<span class="text-emerald-400">Flow</span>
+            </h1>
+            <p class="text-white/40 text-sm font-semibold tracking-wide">Campus essentials collected in minutes.</p>
+        </div>
+
+        <!-- Main Card -->
+        <div class="glass-container fade-in" style="animation-delay: 0.1s;">
+            <div class="tabs" id="tabs-container">
+                <div class="tab-btn active" id="login-tab" onclick="switchTab('login')">Sign In</div>
+                <div class="tab-btn" id="signup-tab" onclick="switchTab('signup')">Create Account</div>
+            </div>
+
+            <div id="form-content">
+                <!-- Content injected here -->
+            </div>
+        </div>
+
+        <div class="mt-12 text-center fade-in" style="animation-delay: 0.2s;">
+            <p class="text-white/20 text-[10px] font-black tracking-[0.3em] uppercase mb-1">
+                A Sagnik Basu Production
+            </p>
+            <div class="h-[1px] w-8 bg-white/10 mx-auto"></div>
+        </div>
+    </div>
 
     <script>
-        // ── Show a toast inside #app ──────────────────────────────────────
-        function showToast(type, title, message) {
+        // ── Navigation State ──
+        let currentTab = 'login';
+
+        function switchTab(tab) {
+            if (currentTab === tab) return;
+            currentTab = tab;
+            
+            document.getElementById('login-tab').classList.toggle('active', tab === 'login');
+            document.getElementById('signup-tab').classList.toggle('active', tab === 'signup');
+            
+            // Smooth transition for content
+            const content = document.getElementById('form-content');
+            content.style.opacity = '0';
+            content.style.transform = 'translateY(10px)';
+            
+            setTimeout(() => {
+                renderForm();
+                content.style.opacity = '1';
+                content.style.transform = 'translateY(0)';
+            }, 200);
+        }
+
+        // ── Toast System ──
+        function showToast(type, message) {
             const old = document.getElementById('toast');
             if (old) old.remove();
 
-            const icons = { error: '⚠️', success: '✅', info: 'ℹ️' };
             const toast = document.createElement('div');
             toast.id = 'toast';
             toast.className = `toast ${type}`;
             toast.innerHTML = `
-                <span class="toast-icon">${icons[type] || '⚠️'}</span>
-                <div class="toast-body">
-                    <div class="toast-title">${title}</div>
-                    <div class="toast-msg">${message}</div>
-                </div>
+                <span class="text-xl">${type === 'error' ? '✕' : '✓'}</span>
+                <span>${message}</span>
             `;
-            const app = document.getElementById('app');
-            app.insertBefore(toast, app.firstChild);
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
         }
 
-        // ── Toggle batch field based on role ─────────────────────────────
+        // ── Role Logic ──
         function handleRoleChange(select) {
-            select.classList.remove('text-gray-400');
-            select.classList.add('text-white');
-
-            const row   = document.getElementById('batch-row');
+            const row = document.getElementById('batch-row');
             const label = document.getElementById('batch-label-text');
             const input = document.getElementById('batch');
 
@@ -164,12 +293,12 @@
 
             if (select.value === 'student') {
                 row.classList.add('visible');
-                label.textContent = 'Batch Year (e.g. 2024)';
+                label.textContent = 'Batch Year';
                 input.placeholder = 'e.g. 2024';
                 input.required = true;
             } else if (select.value === 'faculty') {
                 row.classList.add('visible');
-                label.textContent = 'Joining Year (e.g. 2018)';
+                label.textContent = 'Joining Year';
                 input.placeholder = 'e.g. 2018';
                 input.required = true;
             } else {
@@ -178,90 +307,23 @@
             }
         }
 
-        // ── Friendly error messages from server codes ────────────────────
-        const ERROR_MAP = {
-            'invalid_credentials': ['Invalid credentials',   'Email or password is incorrect. Please try again.'],
-            'account_not_found':   ['Account not found',     'No account exists with that email address.'],
-            'wrong_password':      ['Wrong password',        'The password you entered is incorrect.'],
-            'too_many_attempts':   ['Too many attempts',     'Please wait a moment before trying again.'],
-            'email_taken':         ['Email already in use',  'An account with this email already exists.'],
-            'weak_password':       ['Weak password',         'Please choose a stronger password (min 6 chars).'],
-        };
-
-        function friendlyError(serverMessage) {
-            // Try matching against known codes first
-            if (ERROR_MAP[serverMessage]) return ERROR_MAP[serverMessage];
-            // Fall back to whatever the server sent, cleaned up
-            return ['Something went wrong', serverMessage || 'Please check your details and try again.'];
-        }
-
-        // ── Set button loading state ──────────────────────────────────────
-        function setLoading(btn, loading) {
-            btn.disabled = loading;
-            btn.style.opacity = loading ? '0.7' : '1';
-            btn.textContent = loading ? 'Please wait…' : btn.dataset.label;
-        }
-
-        // ── Login via fetch ───────────────────────────────────────────────
-        async function handleLogin(e) {
+        // ── Auth Logic ──
+        async function handleAuth(e, type) {
             e.preventDefault();
             const form = e.target;
-            const btn  = form.querySelector('button[type=submit]');
-            btn.dataset.label = btn.textContent;
+            const btn = form.querySelector('button');
+            const originalText = btn.textContent;
+            
+            btn.disabled = true;
+            btn.textContent = 'Signing in...';
+            btn.style.opacity = '0.6';
 
-            const email    = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-
-            // Client-side pre-checks
-            if (!email.includes('@')) {
-                showToast('error', 'Invalid email', 'Please enter a valid email address.');
-                return;
-            }
-
-            setLoading(btn, true);
-            try {
-                const res  = await fetch('/auth/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password }),
-                });
-                const data = await res.json();
-
-                if (res.ok) {
-                    // Success — redirect wherever your backend says, or to '/'
-                    window.location.href = data.redirect || '/';
-                } else {
-                    const [title, msg] = friendlyError(data.message || data.error);
-                    showToast('error', title, msg);
-                }
-            } catch (err) {
-                showToast('error', 'Connection error', 'Could not reach the server. Please try again.');
-            } finally {
-                setLoading(btn, false);
-            }
-        }
-
-        // ── Signup via fetch ──────────────────────────────────────────────
-        async function handleSignup(e) {
-            e.preventDefault();
-            const form = e.target;
-            const btn  = form.querySelector('button[type=submit]');
-            btn.dataset.label = btn.textContent;
-
-            // Use FormData — form.name clashes with the native DOM property
             const fd = new FormData(form);
-            const body = {
-                name:       fd.get('name')?.trim(),
-                email:      fd.get('email')?.trim(),
-                user_type:  fd.get('user_type'),
-                department: fd.get('department'),
-                batch:      fd.get('batch'),
-                password:   fd.get('password'),
-            };
+            const body = Object.fromEntries(fd.entries());
 
-            setLoading(btn, true);
             try {
-                const res  = await fetch('/auth/signup', {
+                const url = type === 'login' ? '/auth/login' : '/auth/signup';
+                const res = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body),
@@ -269,100 +331,90 @@
                 const data = await res.json();
 
                 if (res.ok) {
-                    showToast('success', 'Account created!', 'Redirecting you to sign in…');
-                    setTimeout(() => load('login'), 1500);
+                    if (type === 'login') {
+                        window.location.href = data.redirect || '/';
+                    } else {
+                        showToast('success', 'Account created! Switching to login...');
+                        setTimeout(() => switchTab('login'), 1500);
+                    }
                 } else {
-                    const [title, msg] = friendlyError(data.message || data.error);
-                    showToast('error', title, msg);
+                    showToast('error', data.message || data.error || 'Authorization failed');
                 }
             } catch (err) {
-                showToast('error', 'Connection error', 'Could not reach the server. Please try again.');
+                showToast('error', 'Unable to reach the server.');
             } finally {
-                setLoading(btn, false);
+                btn.disabled = false;
+                btn.textContent = originalText;
+                btn.style.opacity = '1';
             }
         }
 
-        // ── Pages ─────────────────────────────────────────────────────────
-        function load(page) {
-            const app = document.getElementById('app');
-
-            if (page === 'signup') {
-                app.innerHTML = `
-                    <h1 class="text-2xl font-semibold text-center text-emerald-400 mb-6">Create Account</h1>
-
-                    <form class="space-y-3" onsubmit="handleSignup(event)">
-
-                        <input type="text" name="name" placeholder="Full name" required class="field"/>
-
-                        <input type="email" name="email" placeholder="Email address" required class="field"/>
-
-                        <select name="user_type" id="user_type" required class="field text-gray-400"
-                                onchange="handleRoleChange(this)">
-                            <option value="" disabled selected>Select your role</option>
-                            <option value="student">Student</option>
-                            <option value="faculty">Faculty</option>
-                        </select>
-
-                        <select name="department" required class="field text-gray-400"
-                                onchange="this.classList.remove('text-gray-400'); this.classList.add('text-white')">
-                            <option value="" disabled selected>Select department</option>
-                            <option value="CSE">Computer Science</option>
-                            <option value="ECE">Electronics</option>
-                            <option value="EEE">Electrical</option>
-                            <option value="MECH">Mechanical</option>
-                            <option value="CIVIL">Civil</option>
-                            <option value="IT">Information Technology</option>
-                        </select>
-
-                        <!-- Batch row — hidden until role is chosen -->
+        // ── Render Logic ──
+        function renderForm() {
+            const container = document.getElementById('form-content');
+            container.style.transition = 'all 0.4s ease';
+            
+            if (currentTab === 'login') {
+                container.innerHTML = `
+                    <form onsubmit="handleAuth(event, 'login')">
+                        <div class="input-group">
+                            <label class="input-label">Username / Email</label>
+                            <input type="email" name="email" required placeholder="your.name@college.edu" class="field" autocomplete="email">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Password</label>
+                            <input type="password" name="password" required placeholder="••••••••" class="field" autocomplete="current-password">
+                        </div>
+                        <button type="submit" class="btn-action">Sign In</button>
+                    </form>
+                `;
+            } else {
+                container.innerHTML = `
+                    <form onsubmit="handleAuth(event, 'signup')">
+                        <div class="input-group">
+                            <label class="input-label">Full Name</label>
+                            <input type="text" name="name" required placeholder="John Doe" class="field">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">College Email</label>
+                            <input type="email" name="email" required placeholder="college-id@edu.com" class="field">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Role</label>
+                            <select name="user_type" required class="field" onchange="handleRoleChange(this)">
+                                <option value="" disabled selected>Select Role</option>
+                                <option value="student">Student</option>
+                                <option value="faculty">Faculty</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Department</label>
+                            <select name="department" required class="field">
+                                <option value="" disabled selected>Select Department</option>
+                                <option value="CSE">Computer Science</option>
+                                <option value="ECE">Electronics</option>
+                                <option value="EEE">Electrical</option>
+                                <option value="MECH">Mechanical</option>
+                                <option value="CIVIL">Civil</option>
+                                <option value="IT">Information Technology</option>
+                            </select>
+                        </div>
                         <div id="batch-row" class="batch-row">
-                            <label class="batch-label" id="batch-label-text">Batch year</label>
-                            <input type="text" id="batch" name="batch"
-                                   placeholder="e.g. 2024"
-                                   pattern="[0-9]{4}" maxlength="4" inputmode="numeric"
-                                   class="field"/>
+                            <label class="input-label" id="batch-label-text">Year</label>
+                            <input type="text" id="batch" name="batch" pattern="[0-9]{4}" maxlength="4" placeholder="2024" class="field">
                         </div>
-
-                        <input type="password" name="password" placeholder="Password" required class="field"/>
-
-                        <div class="pt-1">
-                            <button type="submit" class="btn-primary">Create Account</button>
+                        <div class="input-group">
+                            <label class="input-label">Set Password</label>
+                            <input type="password" name="password" required placeholder="Min. 8 characters" class="field" autocomplete="new-password">
                         </div>
+                        <button type="submit" class="btn-action">Create Account</button>
                     </form>
-
-                    <p class="text-center text-gray-500 mt-5 text-sm">
-                        Already have an account?
-                        <a class="text-emerald-400 hover:underline cursor-pointer font-medium" onclick="load('login')">Sign in</a>
-                    </p>
                 `;
-            }
-
-            if (page === 'login') {
-                app.innerHTML = `
-                    <h1 class="text-2xl font-semibold text-center text-emerald-400 mb-6">Sign In</h1>
-
-                    <form class="space-y-3" onsubmit="handleLogin(event)">
-
-                        <input type="email" name="email" id="email" placeholder="Email address" required class="field"/>
-
-                        <input type="password" name="password" id="password" placeholder="Password" required class="field"/>
-
-                        <div class="pt-1">
-                            <button type="submit" class="btn-primary">Sign In</button>
-                        </div>
-                    </form>
-
-                    <p class="text-center text-gray-500 mt-5 text-sm">
-                        New here?
-                        <a class="text-emerald-400 hover:underline cursor-pointer font-medium" onclick="load('signup')">Create account</a>
-                    </p>
-                `;
-
-
             }
         }
 
-        load('login');
+        // Initialize
+        renderForm();
     </script>
 </body>
 </html>
