@@ -25,7 +25,7 @@
       color: white;
     }
 
-    /* ── BOLD Technical Backdrop (Restored from Turn 22) ── */
+    /* ── BOLD Technical Backdrop (Turn 22/Approved State) ── */
     .ff-blobs {
       position: fixed;
       inset: 0;
@@ -44,7 +44,6 @@
       background-size: 30px 30px;
     }
 
-    /* Subtle Grain Layer */
     body::before {
       content: "";
       position: fixed;
@@ -56,7 +55,7 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    /* ── Glass Registration Card (Restored from Turn 22) ── */
+    /* ── Glass Registration Card ── */
     .ff-card {
       position: relative;
       z-index: 10;
@@ -65,11 +64,14 @@
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 24px;
-      padding: 2.5rem 2.25rem 2.25rem;
+      padding: 2.75rem 2.25rem 2.25rem;
       backdrop-filter: blur(25px) saturate(160%);
       -webkit-backdrop-filter: blur(25px) saturate(160%);
       box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9);
       animation: emerge 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     @keyframes emerge {
@@ -77,12 +79,12 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Branding (Title Redesigned, Others Restored) */
+    /* Academic Branding */
     .ff-logo-group {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 1.75rem;
+        margin-bottom: 2rem;
     }
 
     .ff-wave-icon {
@@ -117,48 +119,7 @@
       margin-top: 0.4rem;
     }
 
-    /* Mode Switcher (Restored from Turn 22) */
-    .ff-switcher {
-      display: flex;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 12px;
-      padding: 4px;
-      margin-bottom: 1.75rem;
-      position: relative;
-    }
-
-    .ff-switch-tab {
-      flex: 1;
-      padding: 9px 0;
-      font-weight: 600;
-      font-size: 0.85rem;
-      text-align: center;
-      cursor: pointer;
-      z-index: 5;
-      transition: color 0.3s;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      background: none;
-      border: none;
-      color: rgba(255, 255, 255, 0.3);
-    }
-    .ff-switch-tab.active { color: white; }
-
-    .ff-pill {
-        position: absolute;
-        top: 4px;
-        left: 4px;
-        height: calc(100% - 8px);
-        width: calc(50% - 4px);
-        background: linear-gradient(135deg, #00d4ff, #7b6ef6);
-        border-radius: 9px;
-        transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-        z-index: 1;
-        box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
-    }
-
-    /* Form Styles (Restored from Turn 22) */
+    /* Form Styles */
     .ff-input-box { margin-bottom: 1.15rem; width: 100%; }
     .ff-input-label {
       display: block;
@@ -175,16 +136,16 @@
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 10px;
-      padding: 10px 14px;
+      padding: 11px 15px;
       color: white;
       font-size: 0.95rem;
       outline: none;
       transition: all 0.25s;
     }
-    .ff-input-control::placeholder { color: rgba(255, 255, 255, 0.18); }
+    .ff-input-control::placeholder { color: rgba(255, 255, 255, 0.15); }
     .ff-input-control:focus { 
         border-color: rgba(0, 212, 255, 0.5); 
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.07);
     }
 
     .ff-row { display: flex; gap: 12px; }
@@ -195,18 +156,23 @@
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 10px;
-      padding: 10px 14px;
-      color: rgba(255, 255, 255, 0.7);
+      padding: 11px 15px;
+      color: rgba(255, 255, 255, 0.9);
       font-size: 0.95rem;
       outline: none;
       appearance: none;
       cursor: pointer;
     }
 
+    .ff-select-control option {
+        background: #111118;
+        color: white;
+    }
+
     .ff-primary-btn {
       width: 100%;
-      margin-top: 1rem;
-      padding: 0.85rem;
+      margin-top: 0.75rem;
+      padding: 0.9rem;
       border: none;
       border-radius: 12px;
       background: linear-gradient(135deg, #00c6e0, #6c5ce7);
@@ -225,25 +191,71 @@
         box-shadow: 0 12px 30px rgba(0, 198, 224, 0.45);
     }
 
+    /* Footer Links */
+    .ff-footer-toggle {
+        margin-top: 1.5rem;
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.3);
+        text-align: center;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+    .ff-footer-toggle span {
+        color: rgba(0, 212, 255, 0.8);
+        font-weight: 600;
+        margin-left: 4px;
+        border-bottom: 1px solid transparent;
+    }
+    .ff-footer-toggle:hover span {
+        border-bottom-color: rgba(0, 212, 255, 0.4);
+        color: rgba(0, 212, 255, 1);
+    }
+
     #extra-section { transition: all 0.4s; max-height: 0; opacity: 0; overflow: hidden; }
     #extra-section.active { max-height: 100px; opacity: 1; margin-top: 0.5rem; }
 
+    /* Top-Center System Notification (Non-blocking) */
     .ff-notif-box {
         position: fixed;
-        bottom: 30px;
-        right: 30px;
-        padding: 16px 24px;
-        border-radius: 14px;
-        background: #111118;
-        border-left: 4px solid #00d4ff;
+        top: 30px;
+        left: 50%;
+        transform: translate(-50%, -20px);
+        width: 100%;
+        max-width: 380px;
+        padding: 14px 20px;
+        border-radius: 16px;
+        background: rgba(17, 17, 24, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         color: white;
-        font-weight: 600;
         z-index: 1000;
-        transform: translateX(200%);
-        transition: transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
-    .ff-notif-box.active { transform: translateX(0); }
+    .ff-notif-box.active { 
+        opacity: 1; 
+        transform: translate(-50%, 0);
+    }
+    .ff-notif-box .notif-icon {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(0, 212, 255, 0.1);
+        color: #00d4ff;
+    }
+    .ff-notif-text {
+        font-weight: 600;
+        font-size: 0.88rem;
+    }
   </style>
 </head>
 <body>
@@ -257,28 +269,23 @@
         <p class="ff-tagline-text">College Forms Reimagined</p>
     </div>
 
-    <div class="ff-switcher">
-      <div class="ff-pill" id="pill"></div>
-      <button class="ff-switch-tab active" id="btn-login" onclick="nav('login')">Sign In</button>
-      <button class="ff-switch-tab" id="btn-signup" onclick="nav('signup')">Sign Up</button>
-    </div>
-
     <div id="form-container" class="w-full"></div>
   </div>
 
-  <div id="notif" class="ff-notif-box"></div>
+  <div id="notif" class="ff-notif-box">
+    <div class="notif-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+    </div>
+    <div id="notif-text" class="ff-notif-text"></div>
+  </div>
 
   <script>
     let mode = 'login';
-    const pill = document.getElementById('pill');
     const container = document.getElementById('form-container');
 
-    function nav(target) {
+    function toggleMode(target) {
         if (mode === target) return;
         mode = target;
-        pill.style.transform = target === 'login' ? 'translateX(0)' : 'translateX(100%)';
-        document.getElementById('btn-login').classList.toggle('active', target === 'login');
-        document.getElementById('btn-signup').classList.toggle('active', target === 'signup');
         render();
     }
 
@@ -296,13 +303,14 @@
                     </div>
                     <button type="submit" id="mainBtn" class="ff-primary-btn">Sign In</button>
                 </form>
+                <div class="ff-footer-toggle" onclick="toggleMode('signup')">New here? <span>Create account</span></div>
             `;
         } else {
             container.innerHTML = `
                 <form onsubmit="handleAuth(event, 'signup')">
                     <div class="ff-input-box">
                         <label class="ff-input-label">Full Name</label>
-                        <input class="ff-input-control" type="text" name="name" required placeholder="Your Name">
+                        <input class="ff-input-control" type="text" name="name" required placeholder="Legal Name">
                     </div>
                     <div class="ff-input-box">
                         <label class="ff-input-label">Email Address</label>
@@ -335,6 +343,7 @@
                     </div>
                     <button type="submit" id="mainBtn" class="ff-primary-btn">Sign Up</button>
                 </form>
+                <div class="ff-footer-toggle" onclick="toggleMode('login')">Already have an account? <span>Sign in</span></div>
             `;
         }
     }
@@ -368,23 +377,28 @@
             });
             const data = await res.json();
             if (res.ok) {
-                notify(type === 'login' ? "Welcome back!" : "Account created.");
-                setTimeout(() => window.location.href = data.redirect || '/', 1000);
+                notify(type === 'login' ? "Welcome back!" : "Account created successfully.");
+                setTimeout(() => window.location.href = data.redirect || '/', 1200);
             } else {
                 notify(data.message || "Authentication failed.");
                 btn.disabled = false; btn.innerText = original;
             }
         } catch (err) {
-            notify("Connection error.");
+            notify("Connection error occurred.");
             btn.disabled = false; btn.innerText = original;
         }
     }
 
     function notify(msg) {
         const box = document.getElementById('notif');
-        box.innerText = msg;
+        const text = document.getElementById('notif-text');
+        
+        text.innerText = msg;
         box.classList.add('active');
-        setTimeout(() => box.classList.remove('active'), 3500);
+        
+        setTimeout(() => {
+            box.classList.remove('active');
+        }, 3000);
     }
 
     render();
