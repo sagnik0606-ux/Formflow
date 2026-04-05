@@ -72,8 +72,8 @@ npm install
 **Create/Update `.env` file:**
 
 ```env
-DB_USER=sagnik
-DB_PASSWORD=sagnik123
+DB_USER=user
+DB_PASSWORD=user_pwd
 DB_HOST=localhost
 DB_PORT=1521
 DB_SERVICE=XEPDB1
@@ -90,7 +90,7 @@ Run the SQL setup script in your Oracle Database (SQL Developer or SQL*Plus):
 ```bash
 # Via SQL Developer, run project_db.sql entirely
 # OR via sqlplus:
-sqlplus sagnik/sagnik123@XEPDB1 @project_db.sql
+sqlplus user/user@XEPDB1 @project_db.sql
 ```
 
 This creates:
@@ -268,7 +268,7 @@ After running `project_db.sql`:
 ```bash
 # Check Oracle is running
 sqlplus /nolog
-SQL> connect sagnik/sagnik123@XEPDB1
+SQL> connect user/user@XEPDB1
 
 # Check .env credentials match
 cat .env
@@ -310,14 +310,13 @@ kill -9 <PID>
 
 ## 👨‍💻 Author
 
-**Sagnik**  
-GitHub: [@sagnik0606-ux](https://github.com/sagnik0606-ux)  
-Email: basu.sagnik5@gmail.com
+**Vector**  
+GitHub: [@HalcyonVector](https://github.com/HalcyonVector)  
 
 ## 🙋 Support
 
 Found a bug or have a feature request?  
-[Open an issue](https://github.com/sagnik0606-ux/formflow/issues) on GitHub.
+[Open an issue](https://github.com/HalcyonVector/formflow/issues) on GitHub.
 
 ---
 
