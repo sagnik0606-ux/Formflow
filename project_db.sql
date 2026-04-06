@@ -151,6 +151,8 @@ CREATE TABLE answers (
 -- =========================
 
 -- USERS
+-- Passwords are plaintext here for seed purposes.
+-- Run migrate_passwords.js after inserting to bcrypt-hash them.
 INSERT INTO users (name, email, password, user_type, department, batch) 
 VALUES ('Alice Miller', 'alice.miller@college.edu', 'hashedpw123', 'student', 'Computer Science', 2024);
 
