@@ -37,10 +37,7 @@ function copyCode(code) {
 }
 
 async function loadMyForms() {
-    const params = new URLSearchParams(location.search);
-    const userId = params.get("user_id");
-
-    const res = await fetch(`/forms/myforms?user_id=${userId}`);
+    const res = await authFetch(`/forms/myforms`);
     const data = await res.json();
 
     const container = document.getElementById("forms_list");
@@ -72,9 +69,8 @@ function filterForms(query) {
 }
 
 async function toggleStatus(formId) {
-    const res = await fetch("/forms/toggle-status", {
+    const res = await authFetch("/forms/toggle-status", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ form_id: formId })
     });
 
@@ -161,9 +157,8 @@ function renderFormCard(f) {
 }
 
 async function toggleReport(formId) {
-    const res = await fetch("/forms/toggle-report", {
+    const res = await authFetch("/forms/toggle-report", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ form_id: formId })
     });
 
@@ -174,14 +169,14 @@ async function toggleReport(formId) {
 }
 
 async function selectForm(formId) {
-    const res = await fetch(`/responses/form/${formId}`);
+    const res = await authFetch(`/responses/form/${formId}`);
     const data = await res.json();
 
     renderResponsesSide(data);
 }
 
 async function generateReport(formId) {
-    const res = await fetch(`/responses/report/${formId}?user_id=${userId}`);
+    const res = await authFetch(`/responses/report/${formId}`);
     const data = await res.json();
 
     if (!res.ok) {
@@ -518,10 +513,7 @@ function exportCurrentReportToCSV() {
 
 // ── Edit form ─────────────────────────────────────────────────────────────────
 async function editForm(formId) {
-    const params = new URLSearchParams(location.search);
-    const userId = params.get("user_id");
-
-    const res  = await fetch(`/forms/${formId}/edit?user_id=${userId}`);
+    const res  = await authFetch(`/forms/${formId}/edit`);
     const data = await res.json();
 
     if (!res.ok) {
@@ -590,10 +582,7 @@ function deleteForm(formId) {
 }
 
 async function confirmDeleteForm(formId) {
-    const params = new URLSearchParams(location.search);
-    const userId = params.get("user_id");
-
-    const res  = await fetch(`/forms/${formId}?user_id=${userId}`, { method: 'DELETE' });
+    const res  = await authFetch(`/forms/${formId}`, { method: 'DELETE' });
     const data = await res.json();
 
     document.getElementById('delete_modal')?.remove();

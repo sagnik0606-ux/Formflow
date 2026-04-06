@@ -5,7 +5,7 @@ async function goCreateForm() {
     work_area.innerHTML = `<h2 class="text-3xl font-bold text-white mb-6">Loading Templates...</h2>`;
 
     try {
-        const res = await fetch('/forms/get-templates');
+        const res = await authFetch('/forms/get-templates');
         const templates = await res.json();
         
         let galleryHtml = `
@@ -571,14 +571,14 @@ function saveForm() {
 
     if (isEdit) {
         // ── Edit mode: PUT ──────────────────────────────────────────────────
-        fetch(`/forms/${window.editingFormId}`, {
+        authFetch(`/forms/${window.editingFormId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 title: form.title, description: form.description,
                 access_type: form.access_type, target_dept: form.target_dept,
                 deadline: form.deadline, theme: form.theme,
-                allow_multiple, questions: form.questions, user_id: userId
+                allow_multiple, questions: form.questions
             })
         })
         .then(res => res.json())
@@ -593,14 +593,14 @@ function saveForm() {
         .catch(() => alert("Failed to update form"));
     } else {
         // ── Create mode: POST ───────────────────────────────────────────────
-        fetch("/forms/create", {
+        authFetch("/forms/create", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 title: form.title, description: form.description,
                 access_type: form.access_type, target_dept: form.target_dept,
                 deadline: form.deadline, theme: form.theme,
-                allow_multiple, questions: form.questions, creator_id: userId
+                allow_multiple, questions: form.questions
             })
         })
         .then(res => res.json())

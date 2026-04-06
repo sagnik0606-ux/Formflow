@@ -6,6 +6,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="auth-helper.js"></script>
     <title>FormFlow</title>
 </head>
 
@@ -342,8 +343,8 @@ function renderThemeSwatches() {
 const params = new URLSearchParams(location.search);
 const userId = params.get("user_id");
 
-// Guard: if no user_id, kick back to sign-in and remove this page from history
-if (!userId) { location.replace("signin.html"); }
+// Guard: if no token, kick back to sign-in
+if (!getToken()) { location.replace("signin.html"); }
 const work_area = document.getElementById("work_area");
 
 function setActive(btn) {
@@ -393,7 +394,7 @@ async function loadUser() {
     `;
 
     try {
-        const res  = await fetch(`/auth/user/${userId}`);
+        const res  = await authFetch(`/auth/me`);
         const data = await res.json();
         
         const displayName = data.NAME || "User";
@@ -418,8 +419,8 @@ async function loadUser() {
 
     try {
         const [formsRes, responsesRes] = await Promise.all([
-            fetch(`/forms/myforms?user_id=${userId}`),
-            fetch(`/responses/my/${userId}`)
+            authFetch(`/forms/myforms`),
+            authFetch(`/responses/my`)
         ]);
         const formsData     = await formsRes.json();
         const responsesData = await responsesRes.json();
@@ -501,10 +502,10 @@ async function submitChangePassword() {
     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Saving...';
 
     try {
-        const res  = await fetch('/auth/change-password', {
+        const res  = await authFetch('/auth/change-password', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id: userId, current_password: current, new_password: newPw })
+            body: JSON.stringify({ current_password: current, new_password: newPw })
         });
         const data = await res.json();
 
@@ -547,7 +548,7 @@ async function goMyResponses() {
     `;
 
     try {
-        const res  = await fetch(`/responses/my/${userId}`);
+        const res  = await authFetch(`/responses/my`);
         const data = await res.json();
         const container = document.getElementById("my_responses_list");
         if (!Array.isArray(data) || data.length === 0) {
@@ -589,7 +590,7 @@ async function viewPublicReport(formId, responseId) {
     detail.innerHTML = `<p class="text-gray-400">Loading Report...</p>`;
     
     try {
-        const res = await fetch(`/responses/report/${formId}?user_id=${userId}`);
+        const res = await authFetch(`/responses/report/${formId}`);
         const data = await res.json();
         
         if (!res.ok) {
@@ -618,7 +619,7 @@ async function viewMyResponse(responseId) {
     detail.innerHTML = `<p class="text-gray-400">Loading...</p>`;
     
     try {
-        const res  = await fetch(`/responses/single/${responseId}`);
+        const res  = await authFetch(`/responses/single/${responseId}`);
         const data = await res.json();
         
         if (!res.ok) { 

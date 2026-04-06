@@ -378,6 +378,9 @@
             const data = await res.json();
             if (res.ok) {
                 notify(type === 'login' ? "Welcome back!" : "Account created successfully.");
+                if (type === 'login' && data.token) {
+                    localStorage.setItem("ff_token", data.token);
+                }
                 setTimeout(() => window.location.href = data.redirect || '/', 1200);
             } else {
                 notify(data.message || "Authentication failed.");

@@ -29,10 +29,7 @@ async function loadFormByCode() {
         return;
     }
 
-    const params = new URLSearchParams(location.search);
-    const userId = params.get("user_id");
-
-    const res = await fetch(`/forms/code/${code}?user_id=${userId}`);
+    const res = await authFetch(`/forms/code/${code}`);
     const data = await res.json();
 
     if (!res.ok) {
@@ -75,12 +72,10 @@ async function submitResponse(e, formId) {
         }
     });
 
-    const res = await fetch("/responses/submit", {
+    const res = await authFetch("/responses/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             form_id: Number(formId),
-            user_id: Number(userId),
             answers
         })
     });

@@ -16,7 +16,7 @@ async function goAuditLogs() {
     `;
 
     try {
-        const res = await fetch(`/forms/audit-logs?user_id=${userId}`);
+        const res = await authFetch(`/forms/audit-logs`);
         const data = await res.json();
         
         const terminal = document.getElementById("audit_terminal");
